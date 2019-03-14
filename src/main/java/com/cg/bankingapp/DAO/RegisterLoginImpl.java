@@ -90,8 +90,6 @@ public class RegisterLoginImpl implements RegisterLogin{
 			  while (rs.next()) {
 			  	accountNo=rs.getLong(1);
 			  	password=rs.getString(2);
-			  	System.out.println(accountNo);
-			  	System.out.println(password);
 			  	
 			  	if(accountNo==login.getAccountNo())
 			  	{

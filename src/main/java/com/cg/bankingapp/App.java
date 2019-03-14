@@ -2,9 +2,13 @@ package com.cg.bankingapp;
 
 import java.util.Scanner;
 
+import com.cg.bankingapp.DAO.TransactionDAO;
+import com.cg.bankingapp.DAO.TransactionDAOImpl;
 import com.cg.bankingapp.dto.BankAppDTO;
 import com.cg.bankingapp.service.RegisterLoginService;
 import com.cg.bankingapp.service.RegisterLoginServiceImpl;
+import com.cg.bankingapp.service.TransactionsService;
+import com.cg.bankingapp.service.TransactionsServiceImpl;
 
 /**
  * Hello world!
@@ -14,9 +18,13 @@ public class App
 {
 	static RegisterLoginService registerLoginService = new RegisterLoginServiceImpl();
     static BankAppDTO bankAppDTO = new BankAppDTO();
+   static TransactionsService transactionsService = new TransactionsServiceImpl();
+    
     public static void main( String[] args )
     {
-    	System.out.println("1.Register\n 2.Login");
+    	
+    	do {
+    		System.out.println("1.Register\n 2.Login");
        Scanner sc = new Scanner(System.in);
        int i=sc.nextInt();
        switch (i) {
@@ -69,15 +77,62 @@ public class App
 		int login=registerLoginService.login(bankAppDTO);
 		if(login==1)
 		{
-			System.out.println("login successful");
+			System.out.println("logged in successfully");
+			do
+			{
+			System.out.println("\n1.Deposit\n2.withdrawal\n3.showbalance\n4.fundtransfer");
+			int l = sc.nextInt();
+			switch (l) {
+			case 1: System.out.println("enter the amount to be deposited");
+			      int depositAmount = sc.nextInt();
+			     int d= transactionsService.deposit(bankAppDTO.getAccountNo(), depositAmount);
+			     if(d==1)
+			     {
+			    	 System.out.println("deposit done successfully");
+			     }
+			     else
+			     {
+			    	 System.out.println("failure while updating");
+			     }
+			     
+			     break;
+			      
+			case 2: System.out.println("Enter the amount for withdrawal");
+			          int withdrawalamount = sc.nextInt();
+			        int w =   transactionsService.withdrawal(bankAppDTO.getAccountNo(), withdrawalamount);
+				
+			        if(w==1)
+			        {
+			        	System.out.println("withdrawal done successfully");
+			        }
+			        else
+			        {
+			        	System.out.println("insufficient balance");
+			        }
+				break;
+			case 3: int currentbalance=transactionsService.showBalance(bankAppDTO.getAccountNo());
+                       System.out.println("The available balance in your account is: "+currentbalance);
+                break;    
+                
+			case 4: 
+				
+				
+				break;
+			default:
+				break;
+			}
+			}while(true);
+			
+			
 		}
 		else
 		{
-			System.out.println("login failed");
+			System.out.println("login failed\n please enter valid account no and password");
 		}
 
 	default:
 		break;
 	}
+    	}while(true);
     }
 }
