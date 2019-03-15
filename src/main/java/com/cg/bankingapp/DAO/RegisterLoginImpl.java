@@ -26,9 +26,6 @@ public class RegisterLoginImpl implements RegisterLogin{
 		
 	    PreparedStatement preparedStatement =  connection.prepareStatement("insert into Customer_details values(CUSTOMER.nextval,?,?,?,?,?,?,?,?,?)");
 	    
-	    Random random = new Random();
-	    
-	  //  bankAppDTO.setAccountNo(random.nextInt(1000000000));
 	    bankAppDTO.setBalance(0);
 	    
 	 //  preparedStatement.setLong(1, bankAppDTO.getAccountNo());

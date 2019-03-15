@@ -5,6 +5,7 @@ import java.util.Scanner;
 import com.cg.bankingapp.DAO.TransactionDAO;
 import com.cg.bankingapp.DAO.TransactionDAOImpl;
 import com.cg.bankingapp.dto.BankAppDTO;
+import com.cg.bankingapp.dto.BankAppDTO1;
 import com.cg.bankingapp.service.RegisterLoginService;
 import com.cg.bankingapp.service.RegisterLoginServiceImpl;
 import com.cg.bankingapp.service.TransactionsService;
@@ -19,6 +20,7 @@ public class App
 	static RegisterLoginService registerLoginService = new RegisterLoginServiceImpl();
     static BankAppDTO bankAppDTO = new BankAppDTO();
    static TransactionsService transactionsService = new TransactionsServiceImpl();
+   static BankAppDTO1 bankAppDTO1 = new BankAppDTO1();
     
     public static void main( String[] args )
     {
@@ -62,6 +64,7 @@ public class App
 	          bankAppDTO.setMobileNo(mobileNo);
 	          
 	       long a=   registerLoginService.registration(bankAppDTO);
+	       System.out.println("registerd successfully\n your account no is: "+a);
 	        
 		break;
 	case 2: 
@@ -80,7 +83,7 @@ public class App
 			System.out.println("logged in successfully");
 			do
 			{
-			System.out.println("\n1.Deposit\n2.withdrawal\n3.showbalance\n4.fundtransfer");
+			System.out.println("\n1.Deposit\n2.withdrawal\n3.showbalance\n4.fundtransfer\n5.Exit");
 			int l = sc.nextInt();
 			switch (l) {
 			case 1: System.out.println("enter the amount to be deposited");
@@ -115,8 +118,23 @@ public class App
                 break;    
                 
 			case 4: 
+				bankAppDTO1.setFromAccount(accountNo);
+				System.out.println("enter the receipients account no");
+				long toAccountNo=sc.nextLong();
+				bankAppDTO1.setToAccount(toAccountNo);
+				System.out.println("enter the amount to be transferred");
+				int transferAmount = sc.nextInt();
+				bankAppDTO1.setAmountTransferred(transferAmount);
+				
+				int t=transactionsService.fundTransfer(bankAppDTO1);
 				
 				
+					System.out.println("fund transfer done successfully");
+				
+				
+				break;
+			case 5:
+				System.exit(0);
 				break;
 			default:
 				break;
@@ -129,6 +147,11 @@ public class App
 		{
 			System.out.println("login failed\n please enter valid account no and password");
 		}
+		break;
+	case 3:
+		System.exit(0);
+		break;
+	
 
 	default:
 		break;

@@ -7,6 +7,7 @@ import com.cg.bankingapp.dto.BankAppDTO1;
 
 public class TransactionsServiceImpl implements TransactionsService {
   TransactionDAO transactionDAO = new TransactionDAOImpl();
+  
 	public int deposit(long account,int amount) {
 		// TODO Auto-generated method stub
 		int d = transactionDAO.deposit(account, amount);
@@ -24,7 +25,8 @@ public class TransactionsServiceImpl implements TransactionsService {
 	}
 	public int fundTransfer(BankAppDTO1 transfer) {
 		// TODO Auto-generated method stub
-		return 0;
+		int i= transactionDAO.fundTransfer(transfer);
+		return i;
 	}
 
 }
